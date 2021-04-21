@@ -34,9 +34,16 @@ set(all_target_exports)
 ####################
 
 # it is assumed mujoco has been unzipped in
-# /opt/mpi-is/mujoco200_linux
-set(mujoco_lib_dir "/opt/mpi-is/mujoco200_linux/bin")
-set(mujoco_include_dir "/opt/mpi-is/mujoco200_linux/include")
+# /opt/mpi-is/mujoco200_linux (deprecated) or /usr/local/mujoco200_linux
+if (EXISTS "/opt/mpi-is/mujoco200_linux")
+  set(mujoco_lib_dir "/opt/mpi-is/mujoco200_linux/bin")
+  set(mujoco_include_dir "/opt/mpi-is/mujoco200_linux/include")
+elseif (EXISTS "/usr/local/mujoco200_linux")
+  set(mujoco_lib_dir "/usr/local/mujoco200_linux/bin")
+  set(mujoco_include_dir "/usr/local/mujoco200_linux/include")
+else()
+  message(ERROR "failed to find /usr/local/mujoco200_linux or /opt/mpi-is/mujoco200_linux")
+endif()
 set(mujoco_libs)
 list(APPEND mujoco_libs "libglew.so")
 list(APPEND mujoco_libs "libglewegl.so")
