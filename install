@@ -1,0 +1,49 @@
+#!/bin/bash
+
+MUJOCO_VERSION=2.1.1
+
+# exit at first error
+set -e
+
+# where config folders will be copied
+GLOBAL_INSTALL=/opt/mpi-is/mujoco # if install called by root
+USER_INSTALL=$HOME/.mpi-is/mujoco # if install called by someone else
+
+# not same installation folder if script called
+# with or without sudo
+if [ "$EUID" -ne 0 ]
+then
+   # without sudo: user home directory
+   INSTALL_DIR=$USER_INSTALL
+   echo "installing configuration file in $INSTALL_DIR"
+else
+   # with sudo: global install
+   INSTALL_DIR=$GLOBAL_INSTALL
+   echo "sudo: installing configuration file in $INSTALL_DIR"
+fi
+
+# creating the install folder
+mkdir -p $INSTALL_DIR
+
+# going to install dir
+cd $INSTALL_DIR
+
+# removing existing content
+rm -rf $INSTALL_DIR/*
+
+# downloading mujoco
+wget https://github.com/deepmind/mujoco/releases/download/2.1.1/mujoco-${MUJOCO_VERSION}-linux-x86_64.tar.gz
+
+# uncompressing
+tar -zxvf ./mujoco-${MUJOCO_VERSION}-linux-x86_64.tar.gz
+
+# moving from ./mujoco-{version} to ./
+# (so that the folder remains the same
+#  over various versions)
+mv ./mujoco-${MUJOCO_VERSION}/* ./ && rmdir ./mujoco-${MUJOCO_VERSION}
+
+# deleting tar file
+rm ./mujoco-${MUJOCO_VERSION}-linux-x86_64.tar.gz
+
+# giving read and execute rights to everbody
+chmod -R 755 $INSTALL_DIR
