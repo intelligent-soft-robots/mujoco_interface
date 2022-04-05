@@ -13,7 +13,7 @@
 # ${mujoco_lib_dir}
 macro(ADD_MUJOCO_LIBS)
   
-  set(local_mujoco "~/.mpi-is/mujoco")
+  set(local_mujoco "$ENV{HOME}/.mpi-is/mujoco")
   set(global_mujoco "/opt/mpi-is/mujoco")
   
   # checking mujoco has been installed
@@ -41,8 +41,8 @@ macro(ADD_MUJOCO_LIBS)
 
   # we need these libraries provided by mujoco and expected
   # in the lib folder
-  list(APPEND mujoco_libs "libglew.so")
-  list(APPEND mujoco_libs "libglewegl.so")
+  #list(APPEND mujoco_libs "libglew.so")
+  #list(APPEND mujoco_libs "libglewegl.so")
   list(APPEND mujoco_libs "libmujoco.so")
   foreach(mujoco_lib ${mujoco_libs})
     if(NOT EXISTS ${mujoco_lib_dir}/${mujoco_lib})

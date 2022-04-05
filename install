@@ -32,7 +32,7 @@ cd $INSTALL_DIR
 rm -rf $INSTALL_DIR/*
 
 # downloading mujoco
-wget https://github.com/deepmind/mujoco/releases/download/2.1.1/mujoco-${MUJOCO_VERSION}-linux-x86_64.tar.gz
+wget https://github.com/deepmind/mujoco/releases/download/${MUJOCO_VERSION}/mujoco-${MUJOCO_VERSION}-linux-x86_64.tar.gz
 
 # uncompressing
 tar -zxvf ./mujoco-${MUJOCO_VERSION}-linux-x86_64.tar.gz
@@ -47,3 +47,5 @@ rm ./mujoco-${MUJOCO_VERSION}-linux-x86_64.tar.gz
 
 # giving read and execute rights to everbody
 chmod -R 755 $INSTALL_DIR
+
+exit 0
