@@ -12,7 +12,7 @@
   <license>BSD 3-Clause</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
-  <buildtool_depend>cmake_always_do</buildtool_depend>
+  <build_depend>cmake_always_do</build_depend>
   
   <export>
     <build_type>ament_cmake</build_type>
