@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# prints in the terminal the installation folder
+# of mujoco (depending on whether or not the install
+# scripts has been called by root
+
+# where config folders will be copied
+GLOBAL_INSTALL=/opt/mpi-is/mujoco # if install called by root
+USER_INSTALL=$HOME/.mpi-is/mujoco # if install called by someone else
+
+# not same installation folder if script called
+# with or without sudo
+if [ "$EUID" -ne 0 ]
+then
+   # without sudo: user home directory
+   INSTALL_DIR=$USER_INSTALL
+else
+   # with sudo: global install
+   INSTALL_DIR=$GLOBAL_INSTALL
+fi
+
+echo -n "${INSTALL_DIR}"
+
+exit 0

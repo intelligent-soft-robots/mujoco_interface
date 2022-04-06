@@ -1,0 +1,43 @@
+#!/bin/bash
+
+MUJOCO_VERSION=2.1.1
+
+# exit at first error
+set -e
+
+# folder where this script is
+script_dir=$(dirname "$0")
+
+# calling the install_folder script
+# (same directory) to get the folder
+# where mujoco should be installed.
+INSTALL_DIR=$($script_dir/install_folder)
+echo "installing mujoco in ${INSTALL_DIR}"
+
+# creating the install folder
+mkdir -p $INSTALL_DIR
+
+# going to install dir
+cd $INSTALL_DIR
+
+# removing existing content
+rm -rf $INSTALL_DIR/*
+
+# downloading mujoco
+wget https://github.com/deepmind/mujoco/releases/download/${MUJOCO_VERSION}/mujoco-${MUJOCO_VERSION}-linux-x86_64.tar.gz
+
+# uncompressing
+tar --no-same-owner -zxvf ./mujoco-${MUJOCO_VERSION}-linux-x86_64.tar.gz
+
+# moving from ./mujoco-{version} to ./
+# (so that the folder remains the same
+#  over various versions)
+mv ./mujoco-${MUJOCO_VERSION}/* ./ && rmdir ./mujoco-${MUJOCO_VERSION}
+
+# deleting tar file
+rm ./mujoco-${MUJOCO_VERSION}-linux-x86_64.tar.gz
+
+# giving read and execute rights to everbody
+chmod -R 755 $INSTALL_DIR
+
+exit 0
